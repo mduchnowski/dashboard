@@ -67,7 +67,7 @@ dfAllotment = read_data_from_excel("ledger","allotment")
 dfEntries = read_data_from_excel("ledger", sheet_name="entries")
 
 # Left join on 'Category' column and replace NaN with 0
-df = dfAllotment.merge(dfEntries.groupby('Category')['Spent'].sum().reset_index(), on='Category', how='left').fillna(0)
+#df = dfAllotment.merge(dfEntries.groupby('Category')['Spent'].sum().reset_index(), on='Category', how='left').fillna(0)
 
 # Set the desired sidebar width
 sidebar_width = 100
@@ -134,10 +134,12 @@ with st.sidebar:
         )
 if selected == "Dashboard":
     #st.write(str(days_until_payday(datetime.today().date())))
-    #st.dataframe(dfEntries)    
-    #st.dataframe(dfAllotment)
-    #st.dataframe(df)
+    st.dataframe(dfEntries)    
+    st.dataframe(dfAllotment)
+
     
+if selected == "X":    
+    st.dataframe(df)
     # Sample DataFrame
     #data = {
     #    'Category': ['Category A', 'Category B', 'Category C'],
