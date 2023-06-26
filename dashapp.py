@@ -19,11 +19,20 @@ from streamlit_option_menu import option_menu
 
 st.set_page_config(layout="wide")
 
-
 pio.templates.default="ggplot2"
 
 # --- define constants
 today = datetime.today().date()
+
+# GitHub repository details
+github_user = "mduchnowski"
+github_repo = "dashboard"
+
+# Personal access token (stored securely, not directly in the code)
+access_token = "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"
+
+# Construct the API URL using the access token
+headers = {"Authorization": f"Bearer {access_token}"}
 
 
 from datetime import datetime, timedelta
@@ -52,6 +61,8 @@ def days_until_payday(date):
 # Function for finding how many days until payday 
 @st.cache(suppress_st_warning=True)
 def read_data_from_excel(workbook_name, sheet_name):
+    github_filepath = ".".join([workbook_name, "xlsx"])
+    api_url = f"https://api.github.com/repos/{github_user}/{github_repo}/contents/{github_filepath}"
     try:
         df = pd.read_excel(".".join([workbook_name, "xlsx"]), sheet_name=sheet_name)
         return df
